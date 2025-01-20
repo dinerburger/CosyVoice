@@ -40,6 +40,14 @@ def main():
         }
         files = [('prompt_wav', ('prompt_wav', open(args.prompt_wav, 'rb'), 'application/octet-stream'))]
         response = requests.request("GET", url, data=payload, files=files, stream=True)
+    elif args.mode == 'instruct2':
+        payload = {
+            'tts_text': args.tts_text,
+            'instruct_text': args.instruct_text
+        }
+        files = [('prompt_wav', ('prompt_wav', open(args.prompt_wav, 'rb'), 'application/octet-stream'))]
+        response = requests.request("GET", url, data=payload, files=files, stream=True)
+
     else:
         payload = {
             'tts_text': args.tts_text,
@@ -66,7 +74,7 @@ if __name__ == "__main__":
                         default='50000')
     parser.add_argument('--mode',
                         default='sft',
-                        choices=['sft', 'zero_shot', 'cross_lingual', 'instruct'],
+                        choices=['sft', 'zero_shot', 'cross_lingual', 'instruct', 'instruct2'],
                         help='request mode')
     parser.add_argument('--tts_text',
                         type=str,
